@@ -86,13 +86,13 @@ $("#searchBtn").on("click", function () {
             console.log(results)
 
             for (var i = 0; i < results.length; i++) {
-
+// dt.txt returns value for 3 hour forcast..need to determine 5 day based on this info
                 var day = Number(results[i].dt_txt);
                 console.log(day);
 
             if (results[i].dt_txt.indexOf("12:00:00") !== -1)
             {
-
+// default temp given in kelvin - formula to convert to farhenheit
                 var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                 var tempF = Math.floor(temp);
 
