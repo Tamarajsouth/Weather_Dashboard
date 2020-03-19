@@ -87,19 +87,20 @@ $("#searchBtn").on("click", function () {
 // dt = Time of data calculation (data time for calculating 5 day forecast)
             var results = response.list;
             console.log(results)
-        
-            for (var i = 0; i < response.list.length; i++) {
+        {
+            var date = new Date(); 
+
+            for (var i = 0; i < response.list.length; i++) 
                 if (response.list[i].dt_txt.indexOf("18:00:00") !== -1){
-             
-                console.log(results)
-                console.log(response.list[i])
+                    var day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
+                    console.log(day)
                 
                 var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                 var tempF = Math.floor(temp);
 
                 var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
                 var cardBody = $("<div>").addClass("card-body p-3 forecastBody");
-                var cityDate = $("<h4>").addClass("card-title").text(date.toLocaleDateString("en-US"));
+                var cityDate = $("<h4>").addClass("card-title").text(day);
                 var temperature = $("<p>").addClass("card-text forecastTemp").text("Temperature: " + tempF + "F");
                 var humidity = $("<p>").addClass("card-text forecastHumidity").text("Humidity: " + results[i].main.humidity + "%");
                 // var uvIndex = $("<p>").addClass("card-text uvIndex").text("UV Index: " + uvIndex);
