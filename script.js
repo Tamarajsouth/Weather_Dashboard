@@ -72,6 +72,8 @@ $("#searchBtn").on("click", function () {
         $("#currentCity").append(card)
     }
 
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKEY;
+
     // 5 day forecast
     function getCurrentForecast () {
         $.ajax({
@@ -81,18 +83,17 @@ $("#searchBtn").on("click", function () {
             console.log(response)
             console.log(response.dt)
             $("#forecast").empty();
+
 // dt = Time of data calculation (data time for calculating 5 day forecast)
             var results = response.list;
             console.log(results)
-
-            for (var i = 0; i < results.length; i++) {
-// dt.txt returns value for 3 hour forcast..need to determine 5 day based on this info
-                var day = Number(results[i].dt_txt);
-                console.log(day);
-
-            if (results[i].dt_txt.indexOf("12:00:00") !== -1)
-            {
-// default temp given in kelvin - formula to convert to farhenheit
+        
+            for (var i = 0; i < response.list.length; i++) {
+                if (response.list[i].dt_txt.indexOf("18:00:00") !== -1){
+             
+                console.log(results)
+                console.log(response.list[i])
+                
                 var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                 var tempF = Math.floor(temp);
 
@@ -108,8 +109,11 @@ $("#searchBtn").on("click", function () {
                 card.append(cardBody);
                 $("#forecast").append(card);
 
-            }    
-                
             }
-        });
+        }
+      });
+    
     }
+    
+
+        
