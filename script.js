@@ -41,7 +41,7 @@ $("#searchBtn").on("click", function () {
 });
 
   function makeList() {
-      var listItem = $("<li>").addClass("list-group-item").text(city);
+      var listItem = $("<li>").addClass("list-group-item bg-primary").text(city);
       $(".list").append(listItem);
     }
 // current condtions
@@ -62,7 +62,7 @@ $("#searchBtn").on("click", function () {
         //     currentUVEl.append(UVIndex);
         $("#currentCity").empty();
         
-        var card = $("<div>").addClass("card");
+        var card = $("<div>").addClass("card bg-primary text-white");
         var cardBody = $("<div>").addClass("card-body");
         var city = $("<h4>").addClass("card-title").text(response.name);
         var cityDate = $("<h4>").addClass("card-title").text(date.toLocaleDateString("en-US"));
