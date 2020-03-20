@@ -5,7 +5,6 @@ var APIKEY = "&appid=20e2d4563e93ba31f0594c3895ddf151";
 
 var date = new Date();
 
-
 $("#searchTerm").click(function(event) {
     {
         event.preventDefault();
@@ -31,8 +30,6 @@ $("#searchBtn").on("click", function () {
       console.log(response.weather[0].icon)
       console.log(response.weather[0].main)
       console.log(response.main.humidity)
-    //   console.log(response.uvIndex)
-
       var tempF = (response.main.temp - 273.15) * 1.80 + 32;
       console.log(Math.floor(tempF))
       console.log(response.wind.speed)
@@ -52,9 +49,19 @@ $("#searchBtn").on("click", function () {
 
         var tempF = (response.main.temp - 273.15) * 1.80 +32;
         tempF = Math.floor(tempF);
-
+        
+        // var UVQueryURL = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + APIKEY + "&lat=" + lat + "&lon=" + lon + "&cnt=1";
+        // $.ajax({
+        //     url: UVQueryURL,
+        //     method: "GET"
+        // }).then(function(response){
+        //     var UVIndex = document.createElement("span");
+        //     UVIndex.setAttribute("class","badge badge-danger");
+        //     UVIndex.innerHTML = response.data[0].value;
+        //     currentUVEl.innerHTML = "UV Index: ";
+        //     currentUVEl.append(UVIndex);
         $("#currentCity").empty();
-
+        
         var card = $("<div>").addClass("card");
         var cardBody = $("<div>").addClass("card-body");
         var city = $("<h4>").addClass("card-title").text(response.name);
@@ -63,17 +70,15 @@ $("#searchBtn").on("click", function () {
         var descrip = $("<p>").addClass("card-text current-descrip").text("Current Conditions: " + response.weather[0].main);
         var humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.main.humidity + "%");
         var wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.wind.speed + "mph");
-        var uxIndex = $("<p>").addClass("card-text current-uvindex").text("UV Index: " + response.uvIndex);
+        // var uxIndex = $("<p>").addClass("card-text current-uvindex").text("UV Index: " + response.uvIndex);
         var image = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png")
-
+        
         city.append(cityDate, image)
         cardBody.append(city, descrip, temperature, humidity, wind);
         card.append(cardBody);
         $("#currentCity").append(card)
-    }
-
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKEY;
-
+        };    
+    
     // 5 day forecast
     function getCurrentForecast () {
         $.ajax({
@@ -88,19 +93,19 @@ $("#searchBtn").on("click", function () {
             var results = response.list;
             console.log(results)
         {
-            var date = new Date(); 
-
             for (var i = 0; i < response.list.length; i++) 
-                if (response.list[i].dt_txt.indexOf("18:00:00") !== -1){
+                if (response.list[i].dt_txt.indexOf("12:00:00") !== -1){
                     var day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
                     console.log(day)
+                    var fullDate = response.list[0].dt_txt.slice(0, 7)
+                    console.log(fullDate)
                 
                 var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                 var tempF = Math.floor(temp);
 
                 var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
                 var cardBody = $("<div>").addClass("card-body p-3 forecastBody");
-                var cityDate = $("<h4>").addClass("card-title").text(day);
+                var cityDate = $("<h4>").addClass("card-title").text(fullDate + "-" + day);
                 var temperature = $("<p>").addClass("card-text forecastTemp").text("Temperature: " + tempF + "F");
                 var humidity = $("<p>").addClass("card-text forecastHumidity").text("Humidity: " + results[i].main.humidity + "%");
                 // var uvIndex = $("<p>").addClass("card-text uvIndex").text("UV Index: " + uvIndex);
@@ -117,4 +122,4 @@ $("#searchBtn").on("click", function () {
     }
     
 
-        
+
